@@ -84,7 +84,7 @@ public class ProjectAnalysisPayloadBuilderTest {
                 .build());
         fields.add(Field.builder()
                 .title("New Bugs: ERROR")
-                .value("1, error if greater than 0")
+                .value("A, error if greater than 0")
                 .valueShortEnough(false)
                 .build());
         fields.add(Field.builder()

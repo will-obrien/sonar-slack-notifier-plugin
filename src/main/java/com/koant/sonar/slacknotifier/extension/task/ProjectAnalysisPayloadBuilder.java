@@ -120,15 +120,15 @@ public class ProjectAnalysisPayloadBuilder {
                 || QualityGate.EvaluationStatus.NO_VALUE.equals(condition.getStatus()));
     }
 
-    private String translateThreshold(int threshold){
+    private String translateThreshold(String threshold){
         String translatedThreshold; 
         switch(threshold){
-            case 1: 
+            case "1": 
                 translatedThreshold = "A";
-            case 2:
+            case "2":
                 translatedThreshold = "B";
             default:
-                translatedThreshold = Integer.toString(threshold);
+                translatedThreshold = threshold;
         }
         return translatedThreshold;
     }
@@ -180,7 +180,7 @@ public class ProjectAnalysisPayloadBuilder {
             if (valueIsPercentage(condition)){
                 appendPercentageValue(condition.getValue(), sb);
             }else {
-                sb.append(condition.getValue());
+                sb.append(translateThreshold(condition.getValue()));
             }
         }
     }
