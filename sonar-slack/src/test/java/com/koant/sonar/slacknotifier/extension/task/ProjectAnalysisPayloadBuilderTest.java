@@ -79,22 +79,22 @@ public class ProjectAnalysisPayloadBuilderTest {
         List<Field> fields = new ArrayList<>();
         fields.add(Field.builder()
                 .title("New Vulnerabilities: OK")
-                .value("0, error if >0")
+                .value("0, error if greater than 0")
                 .valueShortEnough(false)
                 .build());
         fields.add(Field.builder()
                 .title("New Bugs: ERROR")
-                .value("1, error if >0")
+                .value("1, error if greater than 0")
                 .valueShortEnough(false)
                 .build());
         fields.add(Field.builder()
                 .title("Technical Debt Ratio on New Code: OK")
-                .value("0.01%, warning if >2.0%, error if >10.0%")
+                .value("0.01%, warning if greater than 2.0%, error if greater than 10.0%")
                 .valueShortEnough(false)
                 .build());
         fields.add(Field.builder()
                 .title("Coverage on New Code: ERROR")
-                .value("75.51%, error if <80.0%")
+                .value("75.51%, error if less than 80.0%")
                 .valueShortEnough(false)
                 .build());
 
@@ -103,8 +103,7 @@ public class ProjectAnalysisPayloadBuilderTest {
                 .color("good")
                 .build());
         return Payload.builder()
-                .text("Project [Project Name] analyzed. See "
-                    + "http://localhist:9000/dashboard?id=project:key. Quality gate status: OK")
+                .text("Project Project Name was analyzed. Quality gate status: OK")
                 .channel("#channel")
                 .username("CKSSlackNotifier")
                 .attachments(attachments)

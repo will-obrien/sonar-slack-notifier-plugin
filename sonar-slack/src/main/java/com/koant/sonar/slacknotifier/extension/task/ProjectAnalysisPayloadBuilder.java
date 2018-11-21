@@ -83,9 +83,8 @@ public class ProjectAnalysisPayloadBuilder {
 
         QualityGate qualityGate = analysis.getQualityGate();
         String shortText = String.join("",
-                "Project [", analysis.getProject().getName(), "] analyzed. See ",
-                projectUrl,
-                qualityGate == null ? "." : ". Quality gate status: " + qualityGate.getStatus());
+                "Project ", analysis.getProject().getName(), " was analyzed.",
+                qualityGate == null ? "." : " Quality gate status: " + qualityGate.getStatus());
 
         return Payload.builder()
                 .channel(projectConfig.getSlackChannel())
@@ -119,6 +118,19 @@ public class ProjectAnalysisPayloadBuilder {
     private boolean notOkNorNoValue(QualityGate.Condition condition) {
         return !(QualityGate.EvaluationStatus.OK.equals(condition.getStatus())
                 || QualityGate.EvaluationStatus.NO_VALUE.equals(condition.getStatus()));
+    }
+
+    private String translateThreshold(int threshold){
+        String translatedThreshold; 
+        switch(threshold){
+            case 1: 
+                translatedThreshold = "A";
+            case 2:
+                translatedThreshold = "B";
+            default:
+                translatedThreshold = Integer.toString(threshold);
+        }
+        return translatedThreshold;
     }
 
     /**
@@ -186,16 +198,16 @@ public class ProjectAnalysisPayloadBuilder {
     private void appendValueOperatorPrefix(QualityGate.Condition condition, StringBuilder sb) {
         switch (condition.getOperator()) {
             case EQUALS:
-                sb.append("==");
+                sb.append("equals ");
                 break;
             case NOT_EQUALS:
-                sb.append("!=");
+                sb.append("does not equal ");
                 break;
             case GREATER_THAN:
-                sb.append(">");
+                sb.append("greater than ");
                 break;
             case LESS_THAN:
-                sb.append("<");
+                sb.append("less than ");
                 break;
         }
     }
