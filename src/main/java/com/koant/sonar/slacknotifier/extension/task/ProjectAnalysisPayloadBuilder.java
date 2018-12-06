@@ -125,10 +125,13 @@ public class ProjectAnalysisPayloadBuilder {
         switch(threshold){
             case "1": 
                 translatedThreshold = "A";
+                break;
             case "2":
                 translatedThreshold = "B";
+                break;
             default:
                 translatedThreshold = threshold;
+                break;
         }
         return translatedThreshold;
     }
@@ -162,7 +165,7 @@ public class ProjectAnalysisPayloadBuilder {
             if (condition.getErrorThreshold() != null) {
                 sb.append(", error if ");
                 appendValueOperatorPrefix(condition, sb);
-                sb.append(condition.getErrorThreshold());
+                sb.append(translateThreshold(condition.getErrorThreshold()));
                 appendValuePostfix(condition, sb);
             }
             return Field.builder().title(conditionName + ": " + condition.getStatus().name())
@@ -204,7 +207,7 @@ public class ProjectAnalysisPayloadBuilder {
                 sb.append("does not equal ");
                 break;
             case GREATER_THAN:
-                sb.append("greater than ");
+                sb.append("worse than ");
                 break;
             case LESS_THAN:
                 sb.append("less than ");
